@@ -1,0 +1,33 @@
+#!/bin/bash
+# MailArchiva Enterprise Edition Start Server Script
+# Copyright (c) 2005-2009 Jamie Band
+# Visit http://www.mailarchiva.com for more information on this product
+
+MAILARCHIVA_HOME=$(dirname $0)/..
+uname -a | grep -q "x86_64"
+RES=$?
+export JAVA_HOME=$MAILARCHIVA_HOME/jre64
+export JRE_HOME=$JAVA_HOME
+export CATALINA_HOME=$MAILARCHIVA_HOME/server
+export CATALINA_BASE=/var/opt/mailarchiva/tomcat
+export JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8"
+export JAVA_ENDORSED_DIRS=$CATALINA_HOME/endorsed
+export PATH=$PATH:$JAVA_HOME/bin
+export CATALINA_OPTS="-Dversion=enterpriseedition -Xmx768m -Xms256m -XX:+UseG1GC -XX:+UseStringDeduplication -XX:G1ReservePercent=20 -XX:InitiatingHeapOccupancyPercent=35 -server -XX:+UseCompressedOops"
+export CATALINA_PID=$MAILARCHIVA_HOME/mailarchiva.pid
+export LC_ALL=en_US.UTF-8
+# tune glibc memory allocation, optimize for low fragmentation
+# limit the number of arenas
+export MALLOC_ARENA_MAX=2
+# disable dynamic mmap threshold, see M_MMAP_THRESHOLD in "man mallopt"
+export MALLOC_MMAP_THRESHOLD_=131072
+export MALLOC_TRIM_THRESHOLD_=131072
+export MALLOC_TOP_PAD_=131072
+export MALLOC_MMAP_MAX_=65536
+LC_ALL=en_US.UTF-8
+export LC_ALL
+export LC_CTYPE="en_US.UTF-8"
+ulimit -n 64000
+ulimit -v unlimited
+sh $MAILARCHIVA_HOME/server/bin/startup.sh
+
