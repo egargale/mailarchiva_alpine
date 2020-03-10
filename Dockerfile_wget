@@ -25,6 +25,8 @@ RUN apk upgrade --update && \
     sed -i 's@port=\"8080\" protocol\=\"HTTP\/1.1@port=\"80\" protocol\=\"org.apache.coyote.http11.Http11NioProtocol@g' $CATALINA_HOME/conf/server.xml && \
     rm -rf /tmp/* /var/cache/apk/*
 
+COPY ./server.xml $CATALINA_HOME/conf/server.xml 
+
 # Define working directory.
 EXPOSE 80
 
