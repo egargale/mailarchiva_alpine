@@ -19,7 +19,7 @@ ENV JAVA_VERSION=7  \
     PATH=$CATALINA_HOME/bin:$PATH
 
 RUN apk upgrade --update && \
-    apk add curl && \
+    apk add curl apr && \
     mkdir -p /opt && \
     mkdir -p /data && \
     curl -jksSL -o /tmp/tomcat.tar.gz https://mirror.ibcp.fr/pub/apache/tomcat/tomcat-7/v7.0.100/bin/apache-tomcat-7.0.100.tar.gz && \
