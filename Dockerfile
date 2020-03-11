@@ -29,7 +29,6 @@ RUN apk upgrade --update && \
     curl -o $CATALINA_HOME/webapps/mailarchiva.war https://d3tlkwz0u312l3.cloudfront.net/download?id=2251 && \
     mkdir -p /var/opt/mailarchiva/tomcat/ROOT && \
     unzip $CATALINA_HOME/webapps/mailarchiva.war -d /var/opt/mailarchiva/tomcat/ROOT && \
-    sed -i 's@port=\"8080\" protocol\=\"HTTP\/1.1@port=\"80\" protocol\=\"org.apache.coyote.http11.Http11NioProtocol@g' $CATALINA_HOME/conf/server.xml && \
     rm -rf /tmp/* /var/cache/apk/*
 
 COPY ./server.xml $CATALINA_HOME/conf/server.xml 
@@ -41,9 +40,6 @@ WORKDIR $CATALINA_HOME
 
 #Set default argument for entry point
 CMD ["run"] 
-
-#Defining what our container runs
-ENTRYPOINT ["/opt/apache-tomcat-7.0.100/bin/catalina.sh"]
 
 #Defining what our container runs
 ENTRYPOINT ["/opt/apache-tomcat-7.0.100/bin/catalina.sh"]
